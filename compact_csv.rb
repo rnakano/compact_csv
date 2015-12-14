@@ -36,6 +36,10 @@ class CompactCSV < CSV
       @row_values = fields
     end
 
+    def headers
+      @table.headers
+    end
+
     def link_table(table)
       @table = table
     end
@@ -52,6 +56,10 @@ class CompactCSV < CSV
     def fields(*headers_and_or_indices)
       if headers_and_or_indices.empty?
         @row_values
+      else
+        headers_and_or_indices.map do |index|
+          field(index)
+        end
       end
     end
 
@@ -63,10 +71,20 @@ class CompactCSV < CSV
       if index.is_a?(Integer)
         @row_values[index]
       else
-        @row_values[@table.index_by_header(index)]
+        i = @table.index_by_header(index)
+        i ? @row_values[i] : nil
       end
     end
     alias_method :field, :[]
+
+    def []=(index, value)
+      if index.is_a?(Integer)
+        @row_values[index] = value
+      else
+        i = @table.index_by_header(index)
+        @row_values[i] = value if i
+      end
+    end
   end
 
   def read

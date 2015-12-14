@@ -6,6 +6,10 @@ class CompactCSV < CSV
       super(array_of_rows)
 
       @headers = headers
+      @headers_map = {}
+      @headers.each_with_index do |str, i|
+        @headers_map[str] = i
+      end
       link_table_headers
     end
 
@@ -17,6 +21,10 @@ class CompactCSV < CSV
 
     def headers
       @headers
+    end
+
+    def index_by_header(str)
+      @headers_map[str]
     end
   end
 
@@ -46,6 +54,19 @@ class CompactCSV < CSV
         @row_values
       end
     end
+
+    def size
+      @row_values.size
+    end
+
+    def [](index)
+      if index.is_a?(Integer)
+        @row_values[index]
+      else
+        @row_values[@table.index_by_header(index)]
+      end
+    end
+    alias_method :field, :[]
   end
 
   def read

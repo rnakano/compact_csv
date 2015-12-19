@@ -32,9 +32,6 @@ class CompactCSV < CSV
 
   class Row < CSV::Row
     def initialize(headers, fields, header_row = false)
-      # @header_row = header_row
-
-      # TODO: handle extra values
       @row_values = fields
     end
 
@@ -44,10 +41,15 @@ class CompactCSV < CSV
 
     def link_table(table)
       @table = table
+      self
     end
 
     def row
       @table.headers.zip(@row_values).to_a
+    end
+
+    def header_row?
+      false
     end
 
     def each(&block)
@@ -57,7 +59,12 @@ class CompactCSV < CSV
 
     def fields(*headers_and_or_indices)
       if headers_and_or_indices.empty?
-        @row_values
+        size_diff = @table.headers.size - @row_values.size
+        if size_diff <= 0
+          @row_values
+        elsif size_diff > 0
+          @row_values + Array.new(size_diff, nil)
+        end
       else
         headers_and_or_indices.map do |index|
           field(index)
@@ -87,6 +94,14 @@ class CompactCSV < CSV
         @row_values[i] = value if i
       end
     end
+
+    def to_hash
+      hash = {}
+      @row_values.zip(@table.headers) do |value, row|
+        hash[row] = value
+      end
+      hash
+    end
   end
 
   def read
@@ -99,3 +114,6 @@ class CompactCSV < CSV
   end
 end
 
+def CompactCSV(*args, &block)
+  CompactCSV.instance(*args, &block)
+end

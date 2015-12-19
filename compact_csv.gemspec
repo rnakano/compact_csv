@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'compact_csv'
+require 'compact_csv/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "compact_csv"
-  spec.version       = CompactCSV::VERSION
+  spec.version       = VERSION
   spec.authors       = ["NAKANO Ryusuke"]
   spec.email         = ["rsk.nakano@gmail.com"]
   spec.summary       = %q{Memory efficient CSV}

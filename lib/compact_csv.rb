@@ -1,8 +1,7 @@
 require 'csv'
 
 class CompactCSV < CSV
-
-  VERSION = "0.0.1"
+  require 'compact_csv/version'
 
   class Table < CSV::Table
     def initialize(array_of_rows, headers)
@@ -99,3 +98,4 @@ class CompactCSV < CSV
     end
   end
 end
+

@@ -1,6 +1,9 @@
 require 'csv'
 
 class CompactCSV < CSV
+
+  VERSION = "0.0.1"
+
   class Table < CSV::Table
     def initialize(array_of_rows, headers)
       super(array_of_rows)

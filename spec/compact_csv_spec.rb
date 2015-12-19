@@ -25,10 +25,32 @@ describe CompactCSV::Table do
   describe '#each' do
     let(:csv) { CompactCSV.read('./spec/data/sample.csv', headers: true) }
 
-    it 'returns rows of iterator' do
+    it 'returns rows iterator' do
       csv.each do |row|
         expect(row).to be_instance_of(CompactCSV::Row)
       end
+    end
+  end
+end
+
+describe CompactCSV::Row do
+  let(:csv) { CompactCSV.read('./spec/data/sample.csv', headers: true) }
+  let(:row) { csv.each.first }
+
+  describe '#each' do
+    it 'returns fields iterator' do
+      row.each do |field|
+        expect(field).to be_instance_of(Array)
+      end
+    end
+  end
+
+  describe '#field' do
+    it 'reads field value' do
+      expect(row['ID']).to eq '1'
+      expect(row[0]).to eq '1'
+      expect(row['VALUE']).to eq 'A'
+      expect(row[1]).to eq 'A'
     end
   end
 end

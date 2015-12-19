@@ -1,7 +1,7 @@
 require 'csv'
 
 class CompactCSV < CSV
-  require 'compact_csv/version'
+  require_relative 'compact_csv/version'
 
   class Table < CSV::Table
     def initialize(array_of_rows, headers)

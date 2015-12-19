@@ -53,4 +53,34 @@ describe CompactCSV::Row do
       expect(row[1]).to eq 'A'
     end
   end
+
+  describe '#fields' do
+    it 'returns fileds of array' do
+      expect(row.fields).to eq ['1', 'A']
+    end
+
+    it 'returns specific fields of array' do
+      expect(row.fields('VALUE')).to eq ['A']
+    end
+  end
+
+  describe '#size' do
+    it 'returns size of fields' do
+      expect(row.size).to be 2
+    end
+  end
+
+  describe '#to_hash' do
+    it 'returns hash form' do
+      expect(row.to_hash).to eq({ 'ID' => '1', 'VALUE' => 'A' })
+    end
+  end
+
+  describe '#[]=' do
+    it 'change field value' do
+      modify_row = row.dup
+      modify_row['VALUE'] = 'AAA'
+      expect(modify_row.fields).to eq ['1', 'AAA']
+    end
+  end
 end

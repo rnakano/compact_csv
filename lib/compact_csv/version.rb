@@ -1,0 +1,3 @@
+class CompactCSV
+  VERSION = "0.0.1"
+end

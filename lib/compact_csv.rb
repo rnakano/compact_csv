@@ -96,4 +96,3 @@ class CompactCSV < CSV
     end
   end
 end
-

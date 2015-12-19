@@ -4,48 +4,20 @@ class CompactCSV < CSV
   require_relative 'compact_csv/version'
 
   class Table < CSV::Table
-    def initialize(array_of_rows, headers)
-      super(array_of_rows)
+  end
 
+  class Row < CSV::Row
+    def initialize(headers, fields, header_row = false)
       @headers = headers
-      @headers_map = {}
-      @headers.each_with_index do |str, i|
-        @headers_map[str] = i
-      end
-      link_table_headers
-    end
-
-    def link_table_headers
-      @table.each do |row|
-        row.link_table(self)
-      end
+      @row_values = fields
     end
 
     def headers
       @headers
     end
 
-    def index_by_header(str)
-      @headers_map[str]
-    end
-  end
-
-  class Row < CSV::Row
-    def initialize(headers, fields, header_row = false)
-      @row_values = fields
-    end
-
-    def headers
-      @table.headers
-    end
-
-    def link_table(table)
-      @table = table
-      self
-    end
-
     def row
-      @table.headers.zip(@row_values).to_a
+      headers.zip(@row_values).to_a
     end
 
     def header_row?
@@ -59,7 +31,7 @@ class CompactCSV < CSV
 
     def fields(*headers_and_or_indices)
       if headers_and_or_indices.empty?
-        size_diff = @table.headers.size - @row_values.size
+        size_diff = headers.size - @row_values.size
         if size_diff <= 0
           @row_values
         elsif size_diff > 0
@@ -80,7 +52,7 @@ class CompactCSV < CSV
       if index.is_a?(Integer)
         @row_values[index]
       else
-        i = @table.index_by_header(index)
+        i = headers.find_index(index)
         i ? @row_values[i] : nil
       end
     end
@@ -90,14 +62,14 @@ class CompactCSV < CSV
       if index.is_a?(Integer)
         @row_values[index] = value
       else
-        i = @table.index_by_header(index)
+        i = headers.find_index(index)
         @row_values[i] = value if i
       end
     end
 
     def to_hash
       hash = {}
-      @row_values.zip(@table.headers) do |value, row|
+      @row_values.zip(headers) do |value, row|
         hash[row] = value
       end
       hash
@@ -107,7 +79,7 @@ class CompactCSV < CSV
   def read
     rows = to_a
     if @use_headers
-      CompactCSV::Table.new(rows, @headers)
+      CompactCSV::Table.new(rows)
     else
       rows
     end

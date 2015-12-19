@@ -1,5 +1,7 @@
 # CompactCSV
 
+[![Build Status](https://travis-ci.org/rnakano/compact_csv.svg?branch=master)](https://travis-ci.org/rnakano/compact_csv)
+
 TODO: Write a gem description
 
 ## Installation

@@ -4,7 +4,9 @@
 [![Coverage Status](https://coveralls.io/repos/rnakano/compact_csv/badge.svg?branch=master&service=github)](https://coveralls.io/github/rnakano/compact_csv?branch=master)
 [![Dependency Status](https://gemnasium.com/rnakano/compact_csv.svg)](https://gemnasium.com/rnakano/compact_csv)
 
-TODO: Write a gem description
+CompactCSV is memory efficient csv module for ruby. Reading operations are compatible with default CSV module.
+
+However, operations which change fields/values structure of row are not available in CompactCSV. If you want to do this, please use default CSV module.
 
 ## Installation
 
@@ -22,7 +24,18 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+csv = CompactCSV.read('sample.csv', headers: true)
+csv.each do |row|
+  p row # => #<CompactCSV::Row "ID":"1" "VALUE":"A">
+  row['VALUE'] = 'AAA'
+  p row # => #<CompactCSV::Row "ID":"1" "VALUE":"AAA">
+end
+```
+
+## Links
+
+* ruby default CSV module: https://github.com/ruby/ruby/blob/trunk/lib/csv.rb
 
 ## Contributing
 

@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "compact_csv"
   spec.version       = VERSION
   spec.authors       = ["NAKANO Ryusuke"]
-  spec.email         = ["rsk.nakano@gmail.com"]
+  spec.email         = ["rsk.nakano+rubygems@gmail.com"]
   spec.summary       = %q{Memory efficient CSV}
   spec.description   = %q{Memory efficient CSV}
   spec.homepage      = "https://github.com/rnakano/compact_csv"

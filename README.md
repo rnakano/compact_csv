@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/rnakano/compact_csv.svg?branch=master)](https://travis-ci.org/rnakano/compact_csv)
 [![Coverage Status](https://coveralls.io/repos/rnakano/compact_csv/badge.svg?branch=master&service=github)](https://coveralls.io/github/rnakano/compact_csv?branch=master)
 [![Dependency Status](https://gemnasium.com/rnakano/compact_csv.svg)](https://gemnasium.com/rnakano/compact_csv)
+[![Gem Version](https://badge.fury.io/rb/compact_csv.svg)](https://badge.fury.io/rb/compact_csv)
 
 CompactCSV is memory efficient csv module for ruby. Reading operations are compatible with default CSV module.
 

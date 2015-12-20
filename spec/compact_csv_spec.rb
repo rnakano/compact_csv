@@ -76,11 +76,81 @@ describe CompactCSV::Row do
     end
   end
 
+  describe '#empty?' do
+    it 'returns true if values empty' do
+      expect(CompactCSV::Row.new([], []).empty?).to be true
+    end
+
+    it 'returns flase if values exist' do
+      expect(row.empty?).to be false
+    end
+  end
+
+  describe '#fetch' do
+    it 'returns value if field exists' do
+      expect(row.fetch('VALUE')).to eq 'A'
+    end
+
+    it 'throw KeyError if field does not exist' do
+      expect { row.fetch('value') }.to raise_error(KeyError)
+    end
+
+    it 'returns varags if field does not exist' do
+      expect(row.fetch('value', 1)).to be 1
+    end
+  end
+
+  describe '#has_key?' do
+    it 'returns true if field exists' do
+      expect(row.has_key?('ID')).to be true
+    end
+
+    it 'returns false if field does not exist' do
+      expect(row.has_key?('id')).to be false
+    end
+  end
+
   describe '#[]=' do
     it 'change field value' do
       modify_row = row.dup
       modify_row['VALUE'] = 'AAA'
       expect(modify_row.fields).to eq ['1', 'AAA']
+    end
+  end
+
+  describe '#==' do
+    it 'returns true with same object' do
+      expect(row == row).to be true
+    end
+
+    it 'returns false with other object' do
+      dirty_row = row.dup
+      dirty_row['VALUE'] = 'B'
+      expect(row == dirty_row).to be true
+    end
+  end
+
+  describe '#<<' do
+    it 'raise CompatibilityError' do
+      expect { row << [1, 2] }.to raise_error(CompactCSV::CompatibilityError)
+    end
+  end
+
+  describe '#push' do
+    it 'raise CompatibilityError' do
+      expect { row.push(1) }.to raise_error(CompactCSV::CompatibilityError)
+    end
+  end
+
+  describe '#delete' do
+    it 'raise CompatibilityError' do
+      expect { row.delete(1) }.to raise_error(CompactCSV::CompatibilityError)
+    end
+  end
+
+  describe '#delete_if' do
+    it 'raise CompatibilityError' do
+      expect { row.delete_if(&:nil?) }.to raise_error(CompactCSV::CompatibilityError)
     end
   end
 end
